@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="mr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>आपलं दूध</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="gate-screen" id="languageScreen">
+        <div class="gate-card">
+          <p class="badge">आपलं दूध</p>
+          <h1>भाषा निवडा</h1>
+          <p>कृपया app सुरू करण्यासाठी भाषा निवडा.</p>
+          <div class="choice-row">
+            <button class="primary green" type="button" data-language="mr">मराठी</button>
+            <button class="primary blue" type="button" data-language="en">English</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="gate-screen hidden" id="videoScreen">
+        <div class="video-frame">
+          <div class="video-media">
+            <img src="./aapla-dudh-background.png" alt="आपलं दूध गोठा" />
+            <div class="milk-wave"></div>
+          </div>
+          <div class="video-copy">
+            <h2>शेत गोठ्यातून थेट घरापर्यंत</h2>
+            <p>ताजे दूध आणि दुग्धजन्य पदार्थ एका click मध्ये.</p>
+            <button class="primary green" type="button" id="continueToLogin">पुढे जा</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="auth-screen hidden" id="authScreen">
+        <div class="auth-card">
+          <div class="auth-hero">
+            <p class="badge">स्वागत आहे</p>
+            <h1>आपलं दूध</h1>
+            <p>Login करा किंवा नवीन customer signup करा.</p>
+          </div>
+
+          <div class="auth-tabs">
+            <button class="auth-tab active" type="button" data-auth-mode="customer">Customer</button>
+            <button class="auth-tab" type="button" data-auth-mode="admin">Admin</button>
+          </div>
+
+          <form class="auth-form active" id="customerAuth">
+            <label>
+              नाव
+              <input id="signupName" type="text" placeholder="तुमचे नाव" autocomplete="name" />
+            </label>
+            <label>
+              मोबाइल नंबर
+              <input id="signupPhone" type="tel" placeholder="10 अंकी मोबाइल नंबर" autocomplete="tel" />
+            </label>
+            <label>
+              पत्ता
+              <textarea id="signupAddress" rows="3" placeholder="घर क्रमांक, रस्ता, गाव/शहर"></textarea>
+            </label>
+            <label>
+              फोटो (optional)
+              <input id="signupPhoto" type="file" accept="image/*" />
+            </label>
+            <p class="hint">फोटो compulsory नाही. नाव, मोबाइल आणि पत्ता भरल्यावर products दिसतील.</p>
+            <button class="primary green" type="button" id="customerLogin">Products पहा</button>
+          </form>
+
+          <form class="auth-form" id="adminAuth">
+            <label>
+              Admin mobile
+              <input id="adminPhone" type="tel" placeholder="Admin mobile" />
+            </label>
+            <label>
+              Admin PIN
+              <input id="adminPin" type="password" placeholder="PIN" />
+            </label>
+            <p class="hint">Demo PIN: 1234</p>
+            <button class="primary purple" type="button" id="adminLogin">Admin login</button>
+          </form>
+
+          <p class="success error" id="authError"></p>
+        </div>
+      </section>
+
+      <section class="main-app hidden" id="mainApp">
+        <section class="hero" aria-label="आपलं दूध">
+          <div class="hero__shade"></div>
+          <div class="hero__content">
+            <p class="badge">शेत गोठ्यातून थेट घरापर्यंत</p>
+            <h1>आपलं दूध</h1>
+            <p class="subtitle">ताजे दूध, दुग्धजन्य पदार्थ आणि वेळेवर घरपोच सेवा</p>
+          </div>
+        </section>
+
+        <section class="order-panel" aria-label="दूध ऑर्डर">
+          <nav class="tabs" aria-label="अ‍ॅप विभाग">
+            <button class="tab active" type="button" data-tab="home">Home</button>
+            <button class="tab" type="button" data-tab="cart">Cart <span id="cartCount">0</span></button>
+            <button class="tab" type="button" data-tab="payment">Payment</button>
+            <button class="tab admin-only hidden" type="button" data-tab="admin">Admin</button>
+            <button class="tab logout-tab" type="button" id="logout">Logout</button>
+          </nav>
+
+          <div class="content-grid">
+            <section class="tab-panel active" id="home" aria-label="उत्पादने">
+              <div class="panel-heading">
+                <span class="panel-icon">🥛</span>
+                <div>
+                  <h2>Products</h2>
+                  <p>Product tile select करा आणि cart मध्ये add करा.</p>
+                </div>
+              </div>
+              <div class="profile-strip" id="profileStrip"></div>
+              <div class="product-grid" id="productGrid"></div>
+            </section>
+
+            <section class="tab-panel" id="cart" aria-label="कार्ट">
+              <div class="panel-heading">
+                <span class="panel-icon">🛒</span>
+                <div>
+                  <h2>Cart</h2>
+                  <p>Quantity बदला किंवा product काढा.</p>
+                </div>
+              </div>
+              <div class="cart-list" id="cartList"></div>
+              <div class="price-strip">
+                <span>Cart total</span>
+                <strong id="cartTotal">₹0</strong>
+              </div>
+              <button class="primary blue" type="button" data-next="payment">Payment करा</button>
+            </section>
+
+            <form class="tab-panel" id="payment" aria-label="भरणा">
+              <div class="panel-heading">
+                <span class="panel-icon">💳</span>
+                <div>
+                  <h2>Payment</h2>
+                  <p>Payment पर्याय निवडून order confirm करा.</p>
+                </div>
+              </div>
+
+              <div class="payment-options">
+                <label><input type="radio" name="payment" value="UPI" checked /> UPI</label>
+                <label><input type="radio" name="payment" value="Google Pay" /> Google Pay</label>
+                <label><input type="radio" name="payment" value="PhonePe" /> PhonePe</label>
+                <label><input type="radio" name="payment" value="Cash" /> Cash on delivery</label>
+              </div>
+
+              <div class="upi-box">
+                <span>UPI ID</span>
+                <strong>aapladudh@upi</strong>
+              </div>
+              <button class="primary purple" type="button" id="confirm">Order confirm करा</button>
+              <p class="success" id="success" role="status"></p>
+            </form>
+
+            <section class="tab-panel" id="admin" aria-label="Admin orders">
+              <div class="panel-heading">
+                <span class="panel-icon">📦</span>
+                <div>
+                  <h2>Admin Orders</h2>
+                  <p>Customer orders फक्त admin login नंतर दिसतील.</p>
+                </div>
+              </div>
+              <div class="admin-actions">
+                <button class="secondary" type="button" id="refreshOrders">Refresh</button>
+                <button class="secondary danger" type="button" id="clearOrders">Clear Demo Orders</button>
+              </div>
+              <div class="orders-list" id="ordersList"></div>
+            </section>
+
+            <aside class="summary" aria-label="ऑर्डर सारांश">
+              <h2>Order Summary</h2>
+              <dl>
+                <div><dt>Customer</dt><dd id="sName">-</dd></div>
+                <div><dt>Mobile</dt><dd id="sPhone">-</dd></div>
+                <div><dt>Items</dt><dd id="sItems">0</dd></div>
+                <div class="summary-total"><dt>Total</dt><dd id="sTotal">₹0</dd></div>
+              </dl>
+            </aside>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
